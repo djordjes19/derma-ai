@@ -1,4 +1,4 @@
-image_name,patient_id,sex,age_approx,anatom_site_general_challenge,diagnosis,benign_malignant,target,skin tone
+image_name,patient_id,sex,age_approx,anatom_site_general_challenge,diagnosis,benign_malignant,target,skin_tone
 ISIC_2637011,IP_7279968,male,45.0,head/neck,unknown,benign,0,#F3E7DB
 ISIC_0015719,IP_3075186,female,45.0,upper extremity,unknown,benign,0,#D7BD96
 ISIC_0052212,IP_2842074,female,50.0,lower extremity,nevus,benign,0,#604134
