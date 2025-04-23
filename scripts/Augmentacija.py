@@ -87,33 +87,3 @@ class Augmentation:
             pad_h = (h - new_h) // 2
             img_zoomed = ImageOps.expand(img_zoomed, border=(pad_w, pad_h), fill='black')
         return img_zoomed
-
-
-img_path = '../../data/ISIC_0052212.jpg'
-img = Image.open(img_path)
-
-# Inicijalizuj klasu
-augmentor = Augmentation()
-
-# Pokupi sve metode augmentacije (ručno ih pozivamo redom)
-augmented_images = [
-    ("Original", img),
-    ("Color jitter", augmentor.color_jitter(img)),
-    ("Brightness", augmentor.brightness(img)),
-    ("Contrast", augmentor.contrast(img)),
-    ("Gaussian noise", augmentor.gaussian_noise(img)),
-    ("Blur", augmentor.blur(img)),
-    ("CropResize", augmentor.crop_resize(img)),
-    ("Zoom", augmentor.zoom(img))
-]
-
-# Prikaz slika
-plt.figure(figsize=(16, 10))
-for i, (title, aug_img) in enumerate(augmented_images):
-    plt.subplot(2, 4, i + 1)
-    plt.imshow(aug_img)
-    plt.title(title)
-    plt.axis("off")
-
-plt.tight_layout()
-plt.show()
