@@ -4,11 +4,9 @@ pretrained: true      # Da li koristiti pretreniran model
 dropout: 0.5          # Stopa dropout-a za regularizaciju
 
 # Direktorijumi
-data_dir: ./data/raw           # Folder sa trening i validacionim podacima
-csv_file: ocisceni_podaci.csv  # CSV fajl za trening i validaciju
-test_dir: ./data/test          # Odvojeni folder samo za test podatke
-test_csv_file: test_podaci.csv # CSV fajl za test podatke
-val_size: 0.2                  # Procenat podataka za validacij
+data_dir: ./data/raw
+csv_file: ocisceni_podaci.csv
+output_dir: ./results/models
 
 # Veličina i parametri učitavanja podataka
 img_size: 224
