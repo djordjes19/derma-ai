@@ -85,3 +85,54 @@ def plot_skin_tone_distribution( df):
     plt.axis('equal')
     plt.tight_layout()
     plt.show()
+
+
+
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_skin_tone_distribution_v2(df):
+    # Group data by skin tone and target (benign/malignant)
+    grouped_data = df.groupby(['skin_tone', 'target']).size().unstack(fill_value=0)
+
+    # Prepare data for plotting
+    skin_tones = grouped_data.index
+    benign_counts = grouped_data[0]  # target=0 (benign)
+    malignant_counts = grouped_data[1]  # target=1 (malignant)
+
+    # Set up the bar plot
+    plt.figure(figsize=(12, 6))
+    bar_width = 0.35
+    x = np.arange(len(skin_tones))
+
+    # Plot bars for benign and malignant
+    bars_benign = plt.bar(x - bar_width/2, benign_counts, bar_width, label='Benign (0)', color=skin_tones, alpha=0.8)
+    bars_malignant = plt.bar(x + bar_width/2, malignant_counts, bar_width, label='Malignant (1)', color=skin_tones, alpha=0.4)
+
+    # Add text labels above bars
+    for i, (benign_count, malignant_count) in enumerate(zip(benign_counts, malignant_counts)):
+        plt.text(x[i] - bar_width/2, benign_count + 0.5, f"{benign_count}", ha='center', va='bottom', fontsize=8)
+        plt.text(x[i] + bar_width/2, malignant_count + 0.5, f"{malignant_count}", ha='center', va='bottom', fontsize=8)
+
+    # Customize the plot
+    plt.xticks(x, skin_tones, rotation=45)
+    plt.title('Distribucija podataka po boji kože i malignosti')
+    plt.xlabel('Heksadecimalni kod boje kože')
+    plt.ylabel('Broj uzoraka')
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+    # Pie chart for overall skin tone proportions (unchanged)
+    skin_tone_counts = df['skin_tone'].value_counts().sort_index()
+    plt.figure(figsize=(10, 8))
+    plt.pie(skin_tone_counts.values, labels=skin_tone_counts.index,
+            colors=skin_tone_counts.index, autopct='%1.1f%%')
+    plt.title('Proporcije podataka po boji kože')
+    plt.axis('equal')
+    plt.tight_layout()
+    plt.show()
