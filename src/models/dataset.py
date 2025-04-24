@@ -47,21 +47,29 @@ def get_transforms(img_size):
 
 def load_data(config):
     """Učitavanje podataka i priprema data loadera"""
-    # Učitavanje CSV fajla
-    df = pd.read_csv(config['csv_file'])
+    # Učitavanje CSV fajla za trening/validaciju
+    df_train = pd.read_csv(config['csv_file'])
 
-    # Pretpostavljamo da CSV ima kolone 'image_name' i 'label'
-    img_paths = [os.path.join(config['data_dir'], img_name) for img_name in df['image_name']]
-    labels = df['target'].values
+    # Kreiranje putanja do slika i oznaka za trening/validaciju
+    train_val_paths = [os.path.join(config['data_dir'], img_name) for img_name in df_train['image_name']]
+    train_val_labels = df_train['target'].values
 
-    # Podela na trening, validaciju i test
-    train_paths, temp_paths, train_labels, temp_labels = train_test_split(
-        img_paths, labels, test_size=0.3, stratify=labels, random_state=42
+    # Podela na trening i validaciju
+    train_paths, val_paths, train_labels, val_labels = train_test_split(
+        train_val_paths, train_val_labels, test_size=config.get('val_size', 0.2),
+        stratify=train_val_labels, random_state=42
     )
 
-    val_paths, test_paths, val_labels, test_labels = train_test_split(
-        temp_paths, temp_labels, test_size=0.5, stratify=temp_labels, random_state=42
-    )
+    # Učitavanje odvojenog test seta ako je definisan
+    if 'test_csv_file' in config and config['test_csv_file']:
+        df_test = pd.read_csv(config['test_csv_file'])
+        test_paths = [os.path.join(config['test_dir'], img_name) for img_name in df_test['image_name']]
+        test_labels = df_test['target'].values
+    else:
+        # Ako nema odvojenog test seta, koristimo deo validacionog
+        val_paths, test_paths, val_labels, test_labels = train_test_split(
+            val_paths, val_labels, test_size=0.5, stratify=val_labels, random_state=42
+        )
 
     # Kreiranje transformacija
     train_transform, val_transform = get_transforms(config['img_size'])
@@ -93,8 +101,7 @@ def load_data(config):
         num_workers=config['num_workers']
     )
 
-    # Opciono - računanje težina klasa za neizbalansiranost
-    # Pretpostavljamo da je odnos već 5:1, ali možemo izračunati za svaki slučaj
+    # Računanje težina klasa ako je potrebno
     if config.get('use_class_weights', False):
         class_counts = pd.Series(train_labels).value_counts().sort_index()
         class_weights = torch.FloatTensor(len(class_counts))
