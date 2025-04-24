@@ -1,7 +1,4 @@
-image_name,patient_id,sex,age_approx,anatom_site_general_challenge,diagnosis,benign_malignant,target,skin_tone
-ISIC_2637011,IP_7279968,male,45.0,head/neck,unknown,benign,0,#F3E7DB
-ISIC_0015719,IP_3075186,female,45.0,upper extremity,unknown,benign,0,#D7BD96
-ISIC_0052212,IP_2842074,female,50.0,lower extremity,nevus,benign,0,#604134
+i,IP_2842074,female,50.0,lower extremity,nevus,benign,0,#604134
 ISIC_0068279,IP_6890425,female,45.0,head/neck,unknown,benign,0,#604134
 ISIC_0074268,IP_8723313,female,55.0,upper extremity,unknown,benign,0,#D7BD96
 ISIC_0074311,IP_2950485,female,40.0,lower extremity,unknown,benign,0,#F3E7DB
@@ -13,7 +10,10 @@ ISIC_0076545,IP_9802602,male,55.0,upper extremity,unknown,benign,0,#A07E56
 ISIC_0076742,IP_2318163,male,75.0,upper extremity,unknown,benign,0,#D7BD96
 ISIC_0076995,IP_2235340,female,55.0,torso,nevus,benign,0,#825C43
 ISIC_0077472,IP_3691360,female,40.0,torso,unknown,benign,0,#F3E7DB
-ISIC_0077735,IP_1109756,male,70.0,torso,unknown,benign,0,#F3E7DB
+ISIC_0077735,IP_1109756,male,70.0,torso,unknown,benign,0,#F3E7DBmage_name,patient_id,sex,age_approx,anatom_site_general_challenge,diagnosis,benign_malignant,target,skin_tone
+ISIC_2637011,IP_7279968,male,45.0,head/neck,unknown,benign,0,#F3E7DB
+ISIC_0015719,IP_3075186,female,45.0,upper extremity,unknown,benign,0,#D7BD96
+ISIC_0052212
 ISIC_0078703,IP_7279968,male,45.0,torso,unknown,benign,0,#F6EDE4
 ISIC_0078712,IP_2189124,male,40.0,lower extremity,unknown,benign,0,#A07E56
 ISIC_0079038,IP_5295861,male,70.0,torso,unknown,benign,0,#D7BD96

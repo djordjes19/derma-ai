@@ -8,3 +8,10 @@ Ovaj projekat se bavi klasifikacijom dermatoskopskih slika melanoma koristeći t
 3. Odraditi vizuelnu inspekciju rasprostranjenosti atributa.
 4. Odraditi balansiranje skupa.
 
+
+# Treniranje pokrecete na komandu
+python src/models/train.py -- config config.yaml
+
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118   
+
+

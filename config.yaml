@@ -1,0 +1,27 @@
+# Za sada samo je ovaj model u opciji
+model_type: resnet50
+
+
+data_dir: ./data/raw
+csv_file: ocisceni_podaci.csv
+output_dir: ./results/models
+
+
+img_size: 224
+batch_size: 32
+num_workers: 4
+
+
+epochs: 20
+learning_rate: 0.001
+weight_decay: 0.0001
+
+
+loss_type: cross-entrophy
+use_class_weights: true
+focal_gamma: 2.0
+
+#Mare ovo podesi na true
+use_cuda: false
+
+

@@ -106,7 +106,7 @@ def analyze_folder(folder_path, num_images=10):
 
 
 # Putanja do foldera sa slikama za analizu
-path = os.path.abspath(os.path.join("..", "..", "data", "raw", "train"))
+path = os.path.abspath(os.path.join("..", "..", "data1", "raw", "train"))
 
 # Analiziraj prvih 5 slika iz foldera
 results = analyze_folder(path, num_images=5)
