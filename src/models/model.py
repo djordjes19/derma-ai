@@ -93,13 +93,24 @@ class EnhancedResNet(nn.Module):
         output = self.classifier(pooled)
 
         return output
-
-
 def get_model(config):
     """Kreiranje modela na osnovu konfiguracije"""
     model_type = config['model_type']
     pretrained = config.get('pretrained', True)
     dropout = config.get('dropout', 0.5)
+
+    # Prvo proveriti napredne modele
+    try:
+        from advanced_models import get_advanced_model
+        # Pokušaj kreirati napredni model
+        advanced_model = get_advanced_model(config)
+        if advanced_model is not None:
+            return advanced_model
+    except ImportError:
+        print("Advanced models module not found, using base models only.")
+    except Exception as e:
+        print(f"Error loading advanced model: {e}")
+        print("Falling back to base models.")
 
     # Napredna verzija ResNet
     if model_type in ['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152']:
