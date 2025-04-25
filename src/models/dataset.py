@@ -51,7 +51,7 @@ def load_data(config):
     df = pd.read_csv(config['csv_file'])
 
     # Pretpostavljamo da CSV ima kolone 'image_name' i 'label'
-    img_paths = [os.path.join(config['data_dir'], img_name) for img_name in df['image_name']]
+    img_paths = [os.path.join(config['data_dir'], img_name) for img_name in df['image_path']]
     labels = df['target'].values
 
     # Podela na trening, validaciju i test
