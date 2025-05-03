@@ -1,38 +1,49 @@
-# Model parametri
-model_type: resnet50  # resnet18, resnet34, resnet50, resnet101, resnet152, vanilla_resnet50, densenet121
-pretrained: true      # Da li koristiti pretreniran model
-dropout: 0.5          # Stopa dropout-a za regularizaciju
+model:
+  architectures:
+    - resnet50
+    - efficientnet_b0
+    - convnext_tiny
+    - mobilenetv3_large
+  pretrained: true
+  dropout: 0.5
+  img_size: 256
 
-# Direktorijumi
-data_dir: ./data/raw
-csv_file: ocisceni_podaci.csv
-output_dir: ./results/models
+data:
+  data_dir: ./data/train
+  csv_file: balanced_data.csv
+  output_dir: ./models/
+  valid_size: 0.2
 
+training:
+  batch_size: 32
+  num_workers: 4
+  epochs: 25
+  learning_rate: 0.0002
+  weight_decay: 0.0001
+  scheduler: cosine
+  lr_factor: 0.5
+  lr_patience: 3
+  min_lr: 0.00001
+  early_stopping_patience: 7
+  monitor_metric: balanced_acc
+  use_class_weights: true
+  use_mixed_precision: true
+  pin_memory: true
+  grad_clip_value: 1.0
 
-img_size: 224
-batch_size: 32
-num_workers: 4
+kfold:
+  use_kfold: true
+  n_splits: 5
+  shuffle: true
+  random_state: 42
 
-# Trening parametri
-epochs: 30
-learning_rate: 0.0001
-weight_decay: 0.0001
+ensemble:
+  create_ensemble: true
+  method: average
+  optimize_threshold: true
+  target_recall: 0.9
+  min_precision: 0.7
 
-# Learning rate scheduler
-scheduler: cosine     # plateau, cosine, ili null
-lr_factor: 0.5        # Samo za plateau scheduler
-lr_patience: 3        # Samo za plateau scheduler
-min_lr: 0.00001       # Minimalna vrednost lr-a
-
-# Loss funkcija i balansiranje
-loss_type: cross_entropy  # cross_entropy ili focal
-use_class_weights: true   # Da li koristiti class weights za loss funkciju
-focal_gamma: 2.0          # Samo za focal loss
-
-# Early stopping
-patience: 7              # Broj epoha bez poboljšanja za early stopping
-monitor_metric: loss     # Metrika za praćenje (loss, accuracy, f1, auc, balanced_acc)
-
-# Ostalo
-use_cuda: true           # Da li koristiti GPU
-grad_clip_value: 1.0     # Vrednost za gradient clipping
+fairness:
+  evaluate_by_group: true
+  balance_groups: false

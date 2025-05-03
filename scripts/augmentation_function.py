@@ -6,15 +6,15 @@ from PIL import Image
 
 def augment_images(df, data_dir, num_generated_per_image, images_to_augment, augmentations, prefix='aug_'):
     """
-    Augmentuje slike i ažurira DataFrame sa novim redovima.
+    This function is used to augment images using augmentations.
 
-    :param df: Pandas DataFrame koji sadrži informacije o originalnim slikama (mora imati kolonu 'image_name')
-    :param data_dir: Putanja do direktorijuma sa slikama
-    :param num_generated_per_image: Broj augmentacija koje treba generisati po slici
-    :param images_to_augment: Lista imena slika koje treba augmentovati (bez ekstenzije)
-    :param augmentations: Lista funkcija za augmentaciju
-    :param prefix: Prefiks za nazive novih augmentovanih slika
-    :return: DataFrame sa dodatim redovima za nove augmentovane slike
+    :param df: Pandas DataFrame which contains images and their labels (image_name column)
+    :param data_dir: File path of directory which contains images
+    :param num_generated_per_image: Number of augmented images to generate
+    :param images_to_augment: List of image names to augment (without .jpg extension)
+    :param augmentations: List of augmentations
+    :param prefix: Prefix of augmented images
+    :return: DataFrame with additional rows for every augmented image
     """
     augmented_data = []
 
@@ -23,8 +23,8 @@ def augment_images(df, data_dir, num_generated_per_image, images_to_augment, aug
         original_image = Image.open(img_path).convert('RGB')
         filtered_rows = df[df['image_name'] == original_image_name]
         if filtered_rows.empty:
-            print(f"[UPOZORENJE] Slika '{original_image_name}' nije pronađena u DataFrame-u.")
-            continue  # ili nastavi sa sledećom slikom
+            print(f"[WARNING] Image '{original_image_name}' is not found in DataFrame.")
+            continue
         original_row = filtered_rows.iloc[0].copy()
 
         for i in range(num_generated_per_image):

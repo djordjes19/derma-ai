@@ -12,6 +12,7 @@ class Augmentation:
     def __init__(self):
         pass
 
+    #We are defining 7 different ways of image augmentation
 
     def brightness(self, img):
         random.seed()
@@ -28,24 +29,23 @@ class Augmentation:
         img_hsv = img.convert('HSV')
         np_img = np.array(img_hsv)
 
-        # Izvući kanale
+        # Channels
         h = np_img[..., 0].astype(np.int16)
         s = np_img[..., 1].astype(np.float32)
         v = np_img[..., 2]
 
-        # Primeni pomeraj i skaliranje
         hue_shift = random.randint(-10, 10)
         sat_scale = random.uniform(0.7, 1.3)
 
         h = (h + hue_shift) % 256
         s = np.clip(s * sat_scale, 0, 255)
 
-        # Rekombinuj i konvertuj nazad
         np_img[..., 0] = h.astype(np.uint8)
         np_img[..., 1] = s.astype(np.uint8)
 
         jittered = Image.fromarray(np_img, 'HSV').convert('RGB')
         return jittered
+
     def gaussian_noise(self, img):
         random.seed()
         np_img = np.array(img).astype(np.float32)

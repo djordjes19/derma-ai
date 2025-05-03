@@ -8,8 +8,7 @@ import torch.nn.functional as F
 class GeM(nn.Module):
     """
     Generalized Mean Pooling sloj.
-    Bolji od standardnog average pooling-a za mnoge zadatke klasifikacije slika.
-
+    Better than standard average pooling for many image classification tasks.
     """
 
     def __init__(self, p=3, eps=1e-6):
@@ -26,7 +25,7 @@ class GeM(nn.Module):
 
 class CustomClassifier(nn.Module):
     """
-    Napredna klasifikaciona glava sa batch normalizacijom i dropoutom
+    Advanced classification with batch normalization and dropout.
     """
 
     def __init__(self, in_features, num_classes=2, dropout=0.5):
@@ -47,13 +46,13 @@ class CustomClassifier(nn.Module):
 
 class EnhancedResNet(nn.Module):
     """
-    Poboljšana verzija ResNet modela sa GeM poolingom i custom classifierom
+    Enhanced version of ResNet model with GeM pooling and custom classifier
     """
 
     def __init__(self, base_model='resnet50', pretrained=True, num_classes=2, dropout=0.5):
         super(EnhancedResNet, self).__init__()
 
-        # Učitavanje osnovnog modela
+        # Loading base model
         if base_model == 'resnet18':
             base = models.resnet18(pretrained=pretrained)
         elif base_model == 'resnet34':
@@ -67,10 +66,10 @@ class EnhancedResNet(nn.Module):
         else:
             raise ValueError(f"Unsupported ResNet model: {base_model}")
 
-        # Preuzimamo sve slojeve osim poslednjeg fully connected sloja
+        # Every layer except last fully connected one
         self.backbone = nn.Sequential(*list(base.children())[:-2])
 
-        # Feature veličina za ResNet modele
+        # Feature size for Resnet models
         if base_model in ['resnet18', 'resnet34']:
             feature_size = 512
         else:
@@ -93,44 +92,46 @@ class EnhancedResNet(nn.Module):
         output = self.classifier(pooled)
 
         return output
-def get_model(config):
-    """Kreiranje modela na osnovu konfiguracije"""
-    model_type = config['model_type']
-    pretrained = config.get('pretrained', True)
-    dropout = config.get('dropout', 0.5)
 
-    # Prvo proveriti napredne modele
+
+def get_model(model_type, pretrained=True, num_classes=2, dropout=0.5):
+    """
+    Creating models based on model type.
+
+    Args:
+        model_type (str): Model type (for example 'resnet50', 'efficientnet_b0')
+        pretrained (bool): Pretrained model?
+        num_classes (int): Number of classes
+        dropout (float): Dropout rate
+
+    Returns:
+        nn.Module: Initialized model
+    """
+    # Try creating model from advanced_models
     try:
-        from advanced_models import get_advanced_model
-        # Pokušaj kreirati napredni model
+        from src.advanced_models import get_advanced_model
+        config = {
+            'model_type': model_type,
+            'pretrained': pretrained,
+            'dropout': dropout
+        }
         advanced_model = get_advanced_model(config)
         if advanced_model is not None:
             return advanced_model
     except ImportError:
-        print("Advanced models module not found, using base models only.")
+        pass
     except Exception as e:
-        print(f"Error loading advanced model: {e}")
-        print("Falling back to base models.")
+        print(f"Error creating advanced model: {e}")
 
-    # Napredna verzija ResNet
+    # Enhanced ResNet
     if model_type in ['resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152']:
         model = EnhancedResNet(
             base_model=model_type,
             pretrained=pretrained,
-            num_classes=2,
+            num_classes=num_classes,
             dropout=dropout
         )
         print(f"Created Enhanced {model_type} with GeM pooling and custom classifier")
-
-    # Ako želimo standardnu verziju ResNet (bez GeM-a i custom glave)
-    elif model_type == 'vanilla_resnet50':
-        model = models.resnet50(pretrained=pretrained)
-        num_features = model.fc.in_features
-        model.fc = nn.Sequential(
-            nn.Dropout(dropout),
-            nn.Linear(num_features, 2)
-        )
-        print("Created standard ResNet50 model")
 
     # DenseNet
     elif model_type == 'densenet121':
@@ -138,7 +139,7 @@ def get_model(config):
         num_features = model.classifier.in_features
         model.classifier = nn.Sequential(
             nn.Dropout(dropout),
-            nn.Linear(num_features, 2)
+            nn.Linear(num_features, num_classes)
         )
         print("Created DenseNet121 model")
 
