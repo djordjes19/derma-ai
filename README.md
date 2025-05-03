@@ -4,7 +4,21 @@ An ensemble-based deep learning system for accurate and fair melanoma detection 
 
 ## Overview
 
-This project addresses the critical challenge of developing an AI system for melanoma classification that maintains consistent performance across different skin tones. Using dermatoscopic images from the ISIC 2020 Challenge dataset, we've built a multi-architecture ensemble approach that prioritizes both accuracy and fairness.
+This project addresses the critical challenge of developing an AI system for melanoma classification that maintains consistent performance across different skin tones. Using dermatoscopic images from the ISIC 2020 Challenge dataset, we've built a multi-architecture ensemble approach that prioritizes both accuracy and fairness. This project was developed as part of the **LUMEN Data Science** competition, organized by **eSTUDENT**, a student association based in Zagreb, Croatia.
+
+## Team
+
+The project was developed by:
+- Marko Klisurić
+- Lazar Vajkanović
+- Nikola Tešić
+- Đorđe Spasojević
+
+## About the LUMEN Data Science Competition
+
+The **LUMEN Data Science** competition, organized by **eSTUDENT**, is a data science challenge focused on processing large datasets and creating practical solutions in the fields of data mining, machine learning, predictive modeling, and artificial intelligence. The competition begins with the announcement of the challenge task on **January 20, 2025**, with submissions evaluated by a professional jury in the finale at the end of **May 2025**. During the competition period (February to May), participants work on their solutions, supported by workshops organized in collaboration with industry partners.
+
+
 
 ## Features
 
@@ -101,4 +115,3 @@ python predict.py <INPUT_FOLDER> <OUTPUT_CSV> [--config CONFIG_PATH] [--threshol
 - PyTorch 1.8.0+
 - CUDA-compatible GPU (recommended)
 - Dependencies in requirements.txt
-
