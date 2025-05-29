@@ -14,6 +14,8 @@ The project was developed by:
 - Nikola Tešić
 - Đorđe Spasojević
 
+The DermaAI team successfully made it to the finals of the LUMEN Data Science competition!
+
 ## About the LUMEN Data Science Competition
 
 The **LUMEN Data Science** competition, organized by **eSTUDENT**, is a data science challenge focused on processing large datasets and creating practical solutions in the fields of data mining, machine learning, predictive modeling, and artificial intelligence. The competition begins with the announcement of the challenge task on **January 20, 2025**, with submissions evaluated by a professional jury in the finale at the end of **May 2025**. During the competition period (February to May), participants work on their solutions, supported by workshops organized in collaboration with industry partners.
